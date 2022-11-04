@@ -10,4 +10,8 @@ public class PriceRMMService {
     public BigDecimal getCost() {
         return this.cost;
     }
+
+    public TypeDevice getTypeDevice() {
+        return this.typeDevice;
+    }
 }

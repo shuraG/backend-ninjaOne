@@ -7,4 +7,11 @@ public class RMMService {
     private String name;
     private List<PriceRMMService> prices;
 
+    public boolean isAvailableForTypeDevice(TypeDevice typeDevice) {
+        return true;
+    }
+
+    public PriceRMMService getPrice(TypeDevice typeDevice) {
+        return null;
+    }
 }
