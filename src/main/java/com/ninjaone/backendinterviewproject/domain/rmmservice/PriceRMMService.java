@@ -4,16 +4,8 @@ import com.ninjaone.backendinterviewproject.domain.TypeDevice;
 
 import java.math.BigDecimal;
 
-public abstract class PriceRMMService {
-    private BigDecimal cost;
+public interface PriceRMMService {
+    BigDecimal getCost();
 
-    public PriceRMMService(BigDecimal cost) {
-        this.cost = cost;
-    }
-
-    public BigDecimal getCost() {
-        return this.cost;
-    }
-
-    public abstract boolean isAvailableFor(TypeDevice typeDevice);
+    boolean isAvailableFor(TypeDevice typeDevice);
 }

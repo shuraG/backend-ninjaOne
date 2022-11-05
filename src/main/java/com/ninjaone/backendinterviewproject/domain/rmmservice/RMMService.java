@@ -2,6 +2,7 @@ package com.ninjaone.backendinterviewproject.domain.rmmservice;
 
 import com.ninjaone.backendinterviewproject.domain.TypeDevice;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -12,6 +13,7 @@ public class RMMService {
     private List<PriceRMMService> prices;
 
     public RMMService(String name, PriceRMMService price) {
+        this.name = name;
         prices = new ArrayList<>();
         prices.add(price);
     }
@@ -20,8 +22,8 @@ public class RMMService {
         return findPrice(typeDevice).isPresent();
     }
 
-    public PriceRMMService getPrice(TypeDevice typeDevice) {
-        return findPrice(typeDevice).orElseThrow();
+    public BigDecimal getPrice(TypeDevice typeDevice) {
+        return findPrice(typeDevice).map(priceRMMService -> priceRMMService.getCost()).orElseThrow();
     }
 
     private Optional<PriceRMMService> findPrice(TypeDevice typeDevice) {

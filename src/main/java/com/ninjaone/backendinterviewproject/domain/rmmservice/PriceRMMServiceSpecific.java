@@ -4,14 +4,21 @@ import com.ninjaone.backendinterviewproject.domain.TypeDevice;
 
 import java.math.BigDecimal;
 
-public class PriceRMMServiceSpecific extends PriceRMMService {
+public class PriceRMMServiceSpecific implements PriceRMMService {
+
+    private BigDecimal cost;
+
     private TypeDevice typeDevice;
 
     public PriceRMMServiceSpecific(TypeDevice typeDevice, BigDecimal cost) {
-        super(cost);
         this.typeDevice = typeDevice;
+        this.cost = cost;
     }
 
+    @Override
+    public BigDecimal getCost() {
+        return this.cost;
+    }
 
     @Override
     public boolean isAvailableFor(TypeDevice typeDevice) {
