@@ -1,4 +1,6 @@
-package com.ninjaone.backendinterviewproject.domain;
+package com.ninjaone.backendinterviewproject.domain.rmmservice;
+
+import com.ninjaone.backendinterviewproject.domain.TypeDevice;
 
 import java.math.BigDecimal;
 

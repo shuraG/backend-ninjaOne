@@ -1,4 +1,4 @@
-package com.ninjaone.backendinterviewproject.domain;
+package com.ninjaone.backendinterviewproject.domain.rmmservice;
 
 public class NotAvailableRMMServiceForDevice extends RuntimeException{
 }
