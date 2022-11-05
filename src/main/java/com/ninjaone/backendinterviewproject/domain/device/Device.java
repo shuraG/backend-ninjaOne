@@ -1,9 +1,10 @@
-package com.ninjaone.backendinterviewproject.domain;
+package com.ninjaone.backendinterviewproject.domain.device;
 
-import com.ninjaone.backendinterviewproject.domain.rmmservice.NotAvailableRMMServiceForDevice;
+import com.ninjaone.backendinterviewproject.domain.TypeDevice;
 import com.ninjaone.backendinterviewproject.domain.rmmservice.RMMService;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Device {
@@ -15,6 +16,7 @@ public class Device {
     public Device(String systemName, TypeDevice type, RMMService baseService) {
         this.systemName = systemName;
         this.type = type;
+        this.services = new ArrayList<>();
         addService(baseService);
     }
 
