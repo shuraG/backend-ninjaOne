@@ -2,16 +2,16 @@ package com.ninjaone.backendinterviewproject.domain;
 
 import java.math.BigDecimal;
 
-public class PriceRMMService {
-    private RMMService service;
-    private TypeDevice typeDevice;
+public abstract class PriceRMMService {
     private BigDecimal cost;
+
+    public PriceRMMService(BigDecimal cost) {
+        this.cost = cost;
+    }
 
     public BigDecimal getCost() {
         return this.cost;
     }
 
-    public TypeDevice getTypeDevice() {
-        return this.typeDevice;
-    }
+    public abstract boolean isAvailableFor(TypeDevice typeDevice);
 }
