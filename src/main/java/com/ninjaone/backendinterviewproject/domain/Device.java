@@ -1,7 +1,6 @@
 package com.ninjaone.backendinterviewproject.domain;
 
 import com.ninjaone.backendinterviewproject.domain.rmmservice.NotAvailableRMMServiceForDevice;
-import com.ninjaone.backendinterviewproject.domain.rmmservice.PriceRMMService;
 import com.ninjaone.backendinterviewproject.domain.rmmservice.RMMService;
 
 import java.math.BigDecimal;
@@ -11,7 +10,7 @@ public class Device {
     private Long id;
     private String systemName;
     private TypeDevice type;
-    private List<PriceRMMService> priceRMMServices;
+    private List<RMMService> services;
 
     public Device(String systemName, TypeDevice type, RMMService baseService) {
         this.systemName = systemName;
@@ -20,8 +19,8 @@ public class Device {
     }
 
     public BigDecimal costServices() {
-        return priceRMMServices.stream()
-                .map(s -> s.getCost())
+        return services.stream()
+                .map(s -> s.getPrice(type))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
@@ -29,6 +28,6 @@ public class Device {
         if (!service.isAvailableForTypeDevice(type)) {
             throw new NotAvailableRMMServiceForDevice();
         }
-        priceRMMServices.add(service.getPrice(type));
+        services.add(service);
     }
 }
