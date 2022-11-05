@@ -23,7 +23,8 @@ public class RMMService {
     }
 
     public BigDecimal getPrice(TypeDevice typeDevice) {
-        return findPrice(typeDevice).map(priceRMMService -> priceRMMService.getCost()).orElseThrow();
+        return findPrice(typeDevice).map(priceRMMService -> priceRMMService.getCost())
+                .orElseThrow(PriceNotAvailableForDevice::new);
     }
 
     private Optional<PriceRMMService> findPrice(TypeDevice typeDevice) {

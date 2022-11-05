@@ -44,4 +44,12 @@ class RMMServiceTest {
         assertEquals(price, rmmService.getPrice(TypeDevice.MAC));
         assertEquals(price, rmmService.getPrice(TypeDevice.LINUX));
     }
+
+    @Test
+    void givenAnSpecificPriceWhenGetPriceForDifferentTypeThenGetException() {
+        var price = new BigDecimal(10.10);
+        var rmmService = new RMMService("antivirus", new PriceRMMServiceSpecific(TypeDevice.WINDOWS, price));
+
+        assertThrows(PriceNotAvailableForDevice.class, () -> rmmService.getPrice(TypeDevice.MAC));
+    }
 }

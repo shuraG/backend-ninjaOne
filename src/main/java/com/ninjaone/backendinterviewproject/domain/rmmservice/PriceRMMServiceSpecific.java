@@ -22,7 +22,6 @@ public class PriceRMMServiceSpecific implements PriceRMMService {
 
     @Override
     public boolean isAvailableFor(TypeDevice typeDevice) {
-        if (typeDevice.equals(this.typeDevice)) return true;
-        return false;
+        return typeDevice.equals(this.typeDevice);
     }
 }
