@@ -15,7 +15,7 @@ public class PriceRMMServiceSpecific extends PriceRMMService {
 
     @Override
     public boolean isAvailableFor(TypeDevice typeDevice) {
-        if (typeDevice.getName().equals(typeDevice.getName())) return true;
+        if (typeDevice.equals(this.typeDevice)) return true;
         return false;
     }
 }

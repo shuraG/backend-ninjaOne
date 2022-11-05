@@ -2,6 +2,7 @@ package com.ninjaone.backendinterviewproject.domain.rmmservice;
 
 import com.ninjaone.backendinterviewproject.domain.TypeDevice;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +12,7 @@ public class RMMService {
     private List<PriceRMMService> prices;
 
     public RMMService(String name, PriceRMMService price) {
+        prices = new ArrayList<>();
         prices.add(price);
     }
 
