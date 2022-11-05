@@ -4,19 +4,19 @@ import com.ninjaone.backendinterviewproject.domain.TypeDevice;
 import com.ninjaone.backendinterviewproject.domain.rmmservice.RMMService;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Device {
     private Long id;
     private String systemName;
     private TypeDevice type;
-    private List<RMMService> services;
+    private Set<RMMService> services;
 
     public Device(String systemName, TypeDevice type, RMMService baseService) {
         this.systemName = systemName;
         this.type = type;
-        this.services = new ArrayList<>();
+        this.services = new HashSet<>();
         addService(baseService);
     }
 

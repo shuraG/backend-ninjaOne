@@ -15,7 +15,7 @@ class RMMServiceTest {
     @Test
     void givenAnCommonPriceWhenGetAvailabilityForAnyTypeThenGetTrue() {
         var price = new BigDecimal(10.10);
-        var rmmService = new RMMService("antivirus", new PriceRMMServiceCommon(price));
+        var rmmService = new RMMService(1, "antivirus", new PriceRMMServiceCommon(price));
 
         assertTrue(rmmService.isAvailableForTypeDevice(TypeDevice.WINDOWS));
         assertTrue(rmmService.isAvailableForTypeDevice(TypeDevice.MAC));
@@ -25,7 +25,7 @@ class RMMServiceTest {
     @Test
     void givenAnPriceForSpecificTypeWhenGetAvailabilityForDifferentTypeThenGetFalse() {
         var price = new BigDecimal(10.10);
-        var rmmService = new RMMService("antivirus", new PriceRMMServiceSpecific(TypeDevice.WINDOWS, price));
+        var rmmService = new RMMService(1, "antivirus", new PriceRMMServiceSpecific(TypeDevice.WINDOWS, price));
 
         assertFalse(rmmService.isAvailableForTypeDevice(TypeDevice.MAC));
     }
@@ -33,7 +33,7 @@ class RMMServiceTest {
     @Test
     void givenAnPriceForSpecificTypeWhenGetAvailabilityForTypeThenGetTrue() {
         var price = new BigDecimal(10.10);
-        var rmmService = new RMMService("antivirus", new PriceRMMServiceSpecific(TypeDevice.WINDOWS, price));
+        var rmmService = new RMMService(1, "antivirus", new PriceRMMServiceSpecific(TypeDevice.WINDOWS, price));
 
         assertTrue(rmmService.isAvailableForTypeDevice(TypeDevice.WINDOWS));
     }
@@ -41,7 +41,7 @@ class RMMServiceTest {
     @Test
     void givenAnCommonPriceWhenGetPriceForAnyTypeThenGetThisPrice() {
         var price = new BigDecimal(10.10);
-        var rmmService = new RMMService("antivirus", new PriceRMMServiceCommon(price));
+        var rmmService = new RMMService(1, "antivirus", new PriceRMMServiceCommon(price));
 
         assertEquals(price, rmmService.getPrice(TypeDevice.WINDOWS));
         assertEquals(price, rmmService.getPrice(TypeDevice.MAC));
@@ -51,7 +51,7 @@ class RMMServiceTest {
     @Test
     void givenAnSpecificPriceWhenGetPriceForDifferentTypeThenGetException() {
         var price = new BigDecimal(10.10);
-        var rmmService = new RMMService("antivirus", new PriceRMMServiceSpecific(TypeDevice.WINDOWS, price));
+        var rmmService = new RMMService(1, "antivirus", new PriceRMMServiceSpecific(TypeDevice.WINDOWS, price));
 
         assertThrows(PriceNotAvailableForDevice.class, () -> rmmService.getPrice(TypeDevice.MAC));
     }
