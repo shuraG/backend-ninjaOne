@@ -3,20 +3,27 @@ package com.ninjaone.backendinterviewproject.domain.rmmservice;
 import com.ninjaone.backendinterviewproject.domain.TypeDevice;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 public class RMMService {
     private long id;
     private String name;
-    private List<PriceRMMService> prices;
+    private BigDecimal commonPrice;
+    private Map<TypeDevice, BigDecimal> prices;
 
-    public RMMService(long id, String name, PriceRMMService price) {
+    public RMMService(long id, String name, Map<TypeDevice, BigDecimal> prices) {
         this.id = id;
         this.name = name;
-        prices = new ArrayList<>();
-        prices.add(price);
+        this.prices = new HashMap<>();
+        this.prices.putAll(prices);
+    }
+
+    public RMMService(long id, String name, BigDecimal price) {
+        this.id = id;
+        this.name = name;
+        this.commonPrice = price;
     }
 
     public boolean isAvailableForTypeDevice(TypeDevice typeDevice) {
@@ -24,27 +31,16 @@ public class RMMService {
     }
 
     public BigDecimal getPrice(TypeDevice typeDevice) {
-        return findPrice(typeDevice).map(priceRMMService -> priceRMMService.getCost())
+        return findPrice(typeDevice)
                 .orElseThrow(PriceNotAvailableForDevice::new);
     }
 
-    private Optional<PriceRMMService> findPrice(TypeDevice typeDevice) {
-        return prices.stream().filter(p -> p.isAvailableFor(typeDevice))
-                .findFirst();
+    private Optional<BigDecimal> findPrice(TypeDevice typeDevice) {
+        if (commonPrice != null) return Optional.of(commonPrice);
+        return Optional.ofNullable(prices.get(typeDevice));
     }
 
-    @Override
-    public int hashCode() {
-        return Long.hashCode(id);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) return false;
-        if (!(obj instanceof RMMService))
-            return false;
-        if (obj == this)
-            return true;
-        return this.id == ((RMMService) obj).id;
+    public long getId() {
+        return id;
     }
 }
