@@ -4,5 +4,7 @@ import java.util.List;
 
 public interface DeviceRepository {
 
+    void save(Device d);
+
     List<Device> getDevices(long customerId);
 }
