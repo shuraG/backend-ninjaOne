@@ -2,7 +2,7 @@ package com.ninjaone.backendinterviewproject.web.controller;
 
 import com.ninjaone.backendinterviewproject.application.DeviceApplication;
 import com.ninjaone.backendinterviewproject.domain.TypeDevice;
-import com.ninjaone.backendinterviewproject.web.request.DeviceCreate;
+import com.ninjaone.backendinterviewproject.web.request.CreateDevice;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,9 +19,9 @@ public class DeviceController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UUID postDevice(@RequestBody DeviceCreate deviceCreate) {
-        var typeDevice = toTypeDevice(deviceCreate.typeDevice);
-        return deviceApplication.createDevice(deviceCreate.systemName, typeDevice);
+    public UUID postDevice(@RequestBody CreateDevice request) {
+        var typeDevice = toTypeDevice(request.typeDevice);
+        return deviceApplication.createDevice(request.systemName, typeDevice);
     }
 
 

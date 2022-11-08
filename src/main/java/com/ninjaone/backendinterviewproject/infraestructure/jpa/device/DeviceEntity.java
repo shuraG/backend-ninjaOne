@@ -1,12 +1,15 @@
 package com.ninjaone.backendinterviewproject.infraestructure.jpa.device;
 
 import com.ninjaone.backendinterviewproject.domain.TypeDevice;
+import com.ninjaone.backendinterviewproject.domain.device.Device;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.UUID;
 
 @Entity
+@Table(name = "DEVICE")
 public class DeviceEntity {
     @Id
     private UUID id;
@@ -20,5 +23,9 @@ public class DeviceEntity {
     }
 
     public DeviceEntity() {
+    }
+
+    public Device getDevice() {
+        return new Device(id, systemName, TypeDevice.valueOf(type));
     }
 }

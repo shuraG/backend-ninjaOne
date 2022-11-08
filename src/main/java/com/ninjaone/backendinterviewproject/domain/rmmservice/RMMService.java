@@ -1,6 +1,7 @@
 package com.ninjaone.backendinterviewproject.domain.rmmservice;
 
 import com.ninjaone.backendinterviewproject.domain.TypeDevice;
+import com.ninjaone.backendinterviewproject.infraestructure.jpa.rmmservice.RmmServiceEntity;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -49,6 +50,10 @@ public class RMMService {
         if (obj == this)
             return true;
         return this.id.equals(((RMMService) obj).id);
+    }
+
+    public RmmServiceEntity getEntity() {
+        return new RmmServiceEntity(id, name, commonPrice, prices);
     }
 
 }

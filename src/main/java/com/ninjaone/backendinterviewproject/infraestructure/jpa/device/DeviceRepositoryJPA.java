@@ -4,6 +4,8 @@ import com.ninjaone.backendinterviewproject.domain.device.Device;
 import com.ninjaone.backendinterviewproject.domain.device.DeviceRepository;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 public class DeviceRepositoryJPA implements DeviceRepository {
 
@@ -21,6 +23,11 @@ public class DeviceRepositoryJPA implements DeviceRepository {
     @Override
     public List<Device> getDevices(long customerId) {
         return null;
+    }
+
+    @Override
+    public Optional<Device> get(UUID id) {
+        return repo.findById(id).map(e -> e.getDevice());
     }
 
 

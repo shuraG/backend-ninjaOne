@@ -21,8 +21,4 @@ public class DeviceApplication {
         return deviceId;
     }
 
-    private void validSystemName() {
-
-    }
-
 }
