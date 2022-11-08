@@ -8,6 +8,8 @@ public interface DeviceRepository {
 
     void save(Device d);
 
+    void remove(UUID id);
+
     List<Device> getDevices(long customerId);
 
     Optional<Device> get(UUID id);

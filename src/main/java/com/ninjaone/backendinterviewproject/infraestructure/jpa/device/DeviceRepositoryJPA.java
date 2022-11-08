@@ -21,6 +21,11 @@ public class DeviceRepositoryJPA implements DeviceRepository {
     }
 
     @Override
+    public void remove(UUID id) {
+        repo.deleteById(id);
+    }
+
+    @Override
     public List<Device> getDevices(long customerId) {
         return null;
     }

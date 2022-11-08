@@ -19,7 +19,7 @@ public class Application {
 
     @Bean
     public DeviceApplication getApplicationDevice() {
-        return new DeviceApplication(deviceRepository);
+        return new DeviceApplication(deviceRepository, rmmServiceRepository);
     }
 
     @Bean

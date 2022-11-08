@@ -13,13 +13,13 @@ public class Device {
     private UUID id;
     private String systemName;
     private TypeDevice type;
-    private List<RMMService> services;
+    private List<RMMService> subscriptions;
 
     public Device(UUID id, String systemName, TypeDevice type) {
         this.id = id;
         this.systemName = systemName;
         this.type = type;
-        this.services = new LinkedList<>();
+        this.subscriptions = new LinkedList<>();
     }
 
     public void addSubscription(RMMService service) {
@@ -29,20 +29,20 @@ public class Device {
         if (hasRMMService(service)) {
             throw new RuntimeException("Service already added!");
         }
-        services.add(service);
+        subscriptions.add(service);
     }
 
     public BigDecimal costServices() {
-        return services.stream()
+        return subscriptions.stream()
                 .map(s -> s.getPrice(type))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     private boolean hasRMMService(RMMService service) {
-        return services.stream().anyMatch(s -> s.equals(service));
+        return subscriptions.stream().anyMatch(s -> s.equals(service));
     }
 
     public DeviceEntity getEntity() {
-        return new DeviceEntity(id, systemName, type);
+        return new DeviceEntity(id, systemName, type, subscriptions);
     }
 }

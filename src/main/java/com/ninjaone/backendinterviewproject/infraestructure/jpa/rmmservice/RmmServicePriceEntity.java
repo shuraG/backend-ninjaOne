@@ -1,6 +1,9 @@
 package com.ninjaone.backendinterviewproject.infraestructure.jpa.rmmservice;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.UUID;

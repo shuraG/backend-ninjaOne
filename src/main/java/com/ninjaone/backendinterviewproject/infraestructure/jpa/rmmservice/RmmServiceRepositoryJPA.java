@@ -4,6 +4,7 @@ import com.ninjaone.backendinterviewproject.domain.rmmservice.RMMService;
 import com.ninjaone.backendinterviewproject.domain.rmmservice.RMMServiceRepository;
 
 import java.util.Optional;
+import java.util.UUID;
 
 public class RmmServiceRepositoryJPA implements RMMServiceRepository {
     private final RmmServiceCrudRepository repo;
@@ -19,12 +20,12 @@ public class RmmServiceRepositoryJPA implements RMMServiceRepository {
     }
 
     @Override
-    public RMMService getById(Long id) {
-        return null;
+    public Optional<RMMService> get(UUID id) {
+        return repo.findById(id).map(RmmServiceEntity::getRmmService);
     }
 
     @Override
     public Optional<RMMService> getByName(String n) {
-        return repo.findByName(n).map(s -> s.getRmmService());
+        return repo.findByName(n).map(RmmServiceEntity::getRmmService);
     }
 }
