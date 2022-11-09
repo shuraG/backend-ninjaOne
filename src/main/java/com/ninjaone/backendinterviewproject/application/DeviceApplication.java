@@ -9,6 +9,7 @@ import com.ninjaone.backendinterviewproject.domain.rmmservice.RMMServiceReposito
 import java.math.BigDecimal;
 import java.util.Set;
 import java.util.UUID;
+import java.util.function.BiFunction;
 
 public class DeviceApplication {
 
@@ -16,12 +17,12 @@ public class DeviceApplication {
 
     public final RMMServiceRepository rmmServiceRepository;
 
-    public final CacheService cacheService;
+    public final CacheService cache;
 
     public DeviceApplication(DeviceRepository deviceRepository, RMMServiceRepository rmmServiceRepository, CacheService cacheService) {
         this.deviceRepository = deviceRepository;
         this.rmmServiceRepository = rmmServiceRepository;
-        this.cacheService = cacheService;
+        this.cache = cacheService;
     }
 
     public UUID createDevice(String systemName, TypeDevice typeDevice) {
@@ -40,6 +41,7 @@ public class DeviceApplication {
         var service = rmmServiceRepository.get(serviceId).orElseThrow(NotFoundException::new);
         device.addSubscription(service);
         deviceRepository.save(device);
+        upCache(deviceId, service.getPrice(device.getType()), BigDecimal::add);
     }
 
     public void removeSubscription(UUID deviceId, UUID serviceId) {
@@ -47,14 +49,22 @@ public class DeviceApplication {
         var service = rmmServiceRepository.get(serviceId).orElseThrow(NotFoundException::new);
         device.unsubscribe(service);
         deviceRepository.save(device);
+        upCache(deviceId, service.getPrice(device.getType()), BigDecimal::subtract);
     }
 
     public BigDecimal calculateTotal(Set<UUID> devicesId) {
-        var a = cacheService.get(1, s -> new BigDecimal(s));
 
-        return deviceRepository.getDevices(devicesId)
-                .map(Device::costSubscriptions)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        return devicesId.stream().map(deviceId ->
+                cache.get(deviceId.toString(), BigDecimal::new)
+                        .orElseGet(() -> deviceRepository.get(deviceId)
+                                .map(Device::costSubscriptions)
+                                .map(cost -> cache.save(deviceId.toString(), cost, BigDecimal::toString))
+                                .orElseThrow(NotFoundException::new))
+        ).reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    private void upCache(UUID id, BigDecimal price, BiFunction<BigDecimal, BigDecimal, BigDecimal> op) {
+        cache.update(id.toString(), BigDecimal::new, p -> op.apply(p, price), BigDecimal::toString);
     }
 
 }

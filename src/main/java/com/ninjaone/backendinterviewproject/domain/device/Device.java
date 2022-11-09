@@ -57,6 +57,10 @@ public class Device {
         }
     }
 
+    public TypeDevice getType() {
+        return this.type;
+    }
+
     public DeviceEntity getEntity() {
         return new DeviceEntity(id, systemName, type, subscriptions);
     }
