@@ -41,7 +41,7 @@ public class DeviceController {
     }
 
     @DeleteMapping("/{id_device}/subscription")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteSubscription(
             @PathVariable(name = "id_device") UUID deviceId,
             @RequestBody CreateSubscription request
@@ -50,7 +50,7 @@ public class DeviceController {
     }
 
     @DeleteMapping("/{id_device}")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void postDevice(@PathVariable(name = "id_device") UUID deviceId) {
         deviceApplication.removeDevice(deviceId);
     }
