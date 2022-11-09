@@ -17,7 +17,7 @@ class DeviceTest {
     @Test
     void givenADeviceWithZeroServicesWhenCalculateCostSubscriptionThenGetZero() {
         var device = new Device(UUID.randomUUID(), "Macbook pro", TypeDevice.MAC);
-        assertEquals(BigDecimal.ZERO, device.costServices());
+        assertEquals(BigDecimal.ZERO, device.costSubscriptions());
     }
 
     @Test
@@ -29,7 +29,7 @@ class DeviceTest {
         device.addSubscription(backupService);
         device.addSubscription(screenShareService);
 
-        assertEquals(new BigDecimal(4.0), device.costServices());
+        assertEquals(new BigDecimal(4.0), device.costSubscriptions());
     }
 
     @Test
@@ -53,7 +53,7 @@ class DeviceTest {
 
         deviceMac.addSubscription(antivirusForMacService);
 
-        assertEquals(new BigDecimal(7.4), deviceMac.costServices());
+        assertEquals(new BigDecimal(7.4), deviceMac.costSubscriptions());
     }
 
     @Test

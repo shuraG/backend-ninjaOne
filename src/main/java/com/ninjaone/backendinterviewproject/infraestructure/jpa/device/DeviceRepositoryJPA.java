@@ -7,7 +7,10 @@ import org.springframework.dao.EmptyResultDataAccessException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class DeviceRepositoryJPA implements DeviceRepository {
 
@@ -32,8 +35,8 @@ public class DeviceRepositoryJPA implements DeviceRepository {
     }
 
     @Override
-    public List<Device> getDevices(long customerId) {
-        return null;
+    public Stream<Device> getDevices(Set<UUID> devicesId) {
+        return repo.findAllById(devicesId).stream().map(DeviceEntity::getDevice);
     }
 
     @Override

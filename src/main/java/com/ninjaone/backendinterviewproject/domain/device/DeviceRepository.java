@@ -2,7 +2,9 @@ package com.ninjaone.backendinterviewproject.domain.device;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 public interface DeviceRepository {
 
@@ -10,7 +12,7 @@ public interface DeviceRepository {
 
     void remove(UUID id);
 
-    List<Device> getDevices(long customerId);
+    Stream<Device> getDevices(Set<UUID> devicesId);
 
     Optional<Device> get(UUID id);
 }

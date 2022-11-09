@@ -41,7 +41,7 @@ public class Device {
         subscriptions.remove(service);
     }
 
-    public BigDecimal costServices() {
+    public BigDecimal costSubscriptions() {
         return subscriptions.stream()
                 .map(s -> s.getPrice(type))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
