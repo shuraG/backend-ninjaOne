@@ -32,6 +32,13 @@ public class Device {
         subscriptions.add(service);
     }
 
+    public void unsubscribe(RMMService service) {
+        if (!hasRMMService(service)) {
+            throw new RuntimeException("Device does not subscribed to service!");
+        }
+        subscriptions.remove(service);
+    }
+
     public BigDecimal costServices() {
         return subscriptions.stream()
                 .map(s -> s.getPrice(type))

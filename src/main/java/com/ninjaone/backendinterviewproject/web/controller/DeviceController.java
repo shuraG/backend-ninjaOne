@@ -40,6 +40,15 @@ public class DeviceController {
         deviceApplication.addSubscription(deviceId, request.serviceId);
     }
 
+    @DeleteMapping("/{id_device}/subscription")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteSubscription(
+            @PathVariable(name = "id_device") UUID deviceId,
+            @RequestBody CreateSubscription request
+    ) {
+        deviceApplication.removeSubscription(deviceId, request.serviceId);
+    }
+
     @DeleteMapping("/{id_device}")
     @ResponseStatus(HttpStatus.OK)
     public void postDevice(@PathVariable(name = "id_device") UUID deviceId) {

@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.UUID;
 
@@ -27,5 +29,11 @@ public class RmmServiceController {
             return rmmServiceApplication.createRmmService(request.name, request.price);
         }
         return rmmServiceApplication.createRmmService(request.name, request.prices);
+    }
+
+    @DeleteMapping("/{id_rmmservice}")
+    @ResponseStatus(HttpStatus.OK)
+    public void postDevice(@PathVariable(name = "id_rmmservice") UUID rmmServiceId) {
+        rmmServiceApplication.removeRmmService(rmmServiceId);
     }
 }

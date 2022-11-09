@@ -20,6 +20,11 @@ public class RmmServiceRepositoryJPA implements RMMServiceRepository {
     }
 
     @Override
+    public void remove(UUID id) {
+        repo.deleteById(id);
+    }
+
+    @Override
     public Optional<RMMService> get(UUID id) {
         return repo.findById(id).map(RmmServiceEntity::getRmmService);
     }

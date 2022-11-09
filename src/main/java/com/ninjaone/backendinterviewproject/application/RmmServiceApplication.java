@@ -31,6 +31,10 @@ public class RmmServiceApplication {
         return rmmServiceId;
     }
 
+    public void removeRmmService(UUID deviceId) {
+        rmmServiceRepository.remove(deviceId);
+    }
+
     private void validateRmmServiceDuplicated(String name) {
         if (rmmServiceRepository.getByName(name).isPresent()) {
             throw new DuplicateException();

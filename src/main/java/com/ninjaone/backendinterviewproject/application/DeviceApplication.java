@@ -36,4 +36,11 @@ public class DeviceApplication {
         deviceRepository.save(device);
     }
 
+    public void removeSubscription(UUID deviceId, UUID serviceId) {
+        var device = deviceRepository.get(deviceId).orElseThrow(NotFoundException::new);
+        var service = rmmServiceRepository.get(serviceId).orElseThrow(NotFoundException::new);
+        device.unsubscribe(service);
+        deviceRepository.save(device);
+    }
+
 }
