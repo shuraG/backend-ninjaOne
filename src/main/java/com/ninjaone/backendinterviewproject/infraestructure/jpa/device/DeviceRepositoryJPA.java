@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class DeviceRepositoryJPA implements DeviceRepository {
@@ -41,7 +40,12 @@ public class DeviceRepositoryJPA implements DeviceRepository {
 
     @Override
     public Optional<Device> get(UUID id) {
-        return repo.findById(id).map(e -> e.getDevice());
+        return repo.findById(id).map(DeviceEntity::getDevice);
+    }
+
+    @Override
+    public Optional<Device> get(String systemName) {
+        return repo.findBySystemName(systemName).map(DeviceEntity::getDevice);
     }
 
 

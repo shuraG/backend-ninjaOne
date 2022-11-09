@@ -4,6 +4,9 @@ import com.ninjaone.backendinterviewproject.domain.CacheService;
 import com.ninjaone.backendinterviewproject.domain.TypeDevice;
 import com.ninjaone.backendinterviewproject.domain.device.Device;
 import com.ninjaone.backendinterviewproject.domain.device.DeviceRepository;
+import com.ninjaone.backendinterviewproject.domain.extracost.ExtraCost;
+import com.ninjaone.backendinterviewproject.domain.extracost.ExtraCostRepository;
+import com.ninjaone.backendinterviewproject.domain.extracost.TypeExtraCost;
 import com.ninjaone.backendinterviewproject.domain.rmmservice.RMMServiceRepository;
 
 import java.math.BigDecimal;
@@ -17,15 +20,19 @@ public class DeviceApplication {
 
     public final RMMServiceRepository rmmServiceRepository;
 
+    public final ExtraCostRepository extraCostRepository;
+
     public final CacheService cache;
 
-    public DeviceApplication(DeviceRepository deviceRepository, RMMServiceRepository rmmServiceRepository, CacheService cacheService) {
+    public DeviceApplication(DeviceRepository deviceRepository, RMMServiceRepository rmmServiceRepository, ExtraCostRepository extraCostRepository, CacheService cacheService) {
         this.deviceRepository = deviceRepository;
         this.rmmServiceRepository = rmmServiceRepository;
+        this.extraCostRepository = extraCostRepository;
         this.cache = cacheService;
     }
 
     public UUID createDevice(String systemName, TypeDevice typeDevice) {
+        validateDeviceDuplicated(systemName);
         var deviceId = UUID.randomUUID();
         var device = new Device(deviceId, systemName, typeDevice);
         deviceRepository.save(device);
@@ -53,14 +60,22 @@ public class DeviceApplication {
     }
 
     public BigDecimal calculateTotal(Set<UUID> devicesId) {
+        var extraCost = extraCostRepository.findByType(TypeExtraCost.BASE_COST_OBLIGATORY)
+                .map(ExtraCost::getCost).get();
 
         return devicesId.stream().map(deviceId ->
                 cache.get(deviceId.toString(), BigDecimal::new)
                         .orElseGet(() -> deviceRepository.get(deviceId)
-                                .map(Device::costSubscriptions)
+                                .map(device -> device.costSubscriptions().add(extraCost))
                                 .map(cost -> cache.save(deviceId.toString(), cost, BigDecimal::toString))
                                 .orElseThrow(NotFoundException::new))
         ).reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    private void validateDeviceDuplicated(String systemName) {
+        if (deviceRepository.get(systemName).isPresent()) {
+            throw new DuplicateException();
+        }
     }
 
     private void upCache(UUID id, BigDecimal price, BiFunction<BigDecimal, BigDecimal, BigDecimal> op) {

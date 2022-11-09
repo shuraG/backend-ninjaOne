@@ -1,6 +1,8 @@
 package com.ninjaone.backendinterviewproject.web.configuration;
 
 import com.ninjaone.backendinterviewproject.domain.device.DeviceRepository;
+import com.ninjaone.backendinterviewproject.domain.extracost.ExtraCostRepository;
+import com.ninjaone.backendinterviewproject.infraestructure.ExtraCostRepositoryImp;
 import com.ninjaone.backendinterviewproject.infraestructure.jpa.device.DeviceCrudRepository;
 import com.ninjaone.backendinterviewproject.infraestructure.jpa.device.DeviceRepositoryJPA;
 import com.ninjaone.backendinterviewproject.infraestructure.jpa.rmmservice.RmmServiceCrudRepository;
@@ -27,4 +29,10 @@ public class Repository {
     public RmmServiceRepositoryJPA getRmmServiceRepository() {
         return new RmmServiceRepositoryJPA(rmmServiceCrud);
     }
+
+    @Bean
+    public ExtraCostRepository getExtraCostRepository() {
+        return new ExtraCostRepositoryImp();
+    }
+
 }

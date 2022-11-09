@@ -15,4 +15,6 @@ public interface DeviceRepository {
     Stream<Device> getDevices(Set<UUID> devicesId);
 
     Optional<Device> get(UUID id);
+
+    Optional<Device> get(String systemName);
 }

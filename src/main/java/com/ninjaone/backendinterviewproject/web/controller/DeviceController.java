@@ -5,14 +5,11 @@ import com.ninjaone.backendinterviewproject.domain.TypeDevice;
 import com.ninjaone.backendinterviewproject.web.request.CreateDevice;
 import com.ninjaone.backendinterviewproject.web.request.CreateSubscription;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.Set;
 import java.util.UUID;
 
 @RestController
@@ -38,6 +35,13 @@ public class DeviceController {
             @RequestBody CreateSubscription request
     ) {
         deviceApplication.addSubscription(deviceId, request.serviceId);
+    }
+
+    @GetMapping("/cost")
+    public BigDecimal postSubscription(
+            @RequestBody Set<UUID> request
+    ) {
+        return deviceApplication.calculateTotal(request).setScale(2, RoundingMode.HALF_UP);
     }
 
     @DeleteMapping("/{id_device}/subscription")

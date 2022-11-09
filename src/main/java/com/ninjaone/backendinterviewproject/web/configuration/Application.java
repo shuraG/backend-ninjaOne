@@ -4,6 +4,7 @@ import com.ninjaone.backendinterviewproject.application.DeviceApplication;
 import com.ninjaone.backendinterviewproject.application.RmmServiceApplication;
 import com.ninjaone.backendinterviewproject.domain.CacheService;
 import com.ninjaone.backendinterviewproject.domain.device.DeviceRepository;
+import com.ninjaone.backendinterviewproject.domain.extracost.ExtraCostRepository;
 import com.ninjaone.backendinterviewproject.domain.rmmservice.RMMServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -19,11 +20,14 @@ public class Application {
     RMMServiceRepository rmmServiceRepository;
 
     @Autowired
+    ExtraCostRepository extraCostRepository;
+
+    @Autowired
     CacheService cacheService;
 
     @Bean
     public DeviceApplication getApplicationDevice() {
-        return new DeviceApplication(deviceRepository, rmmServiceRepository, cacheService);
+        return new DeviceApplication(deviceRepository, rmmServiceRepository, extraCostRepository, cacheService);
     }
 
     @Bean
