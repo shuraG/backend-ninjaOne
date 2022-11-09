@@ -1,5 +1,7 @@
 package com.ninjaone.backendinterviewproject.application;
 
-public class DuplicateException extends RuntimeException {
+import com.ninjaone.backendinterviewproject.domain.BusinessException;
+
+public class DuplicateException extends BusinessException {
 
 }

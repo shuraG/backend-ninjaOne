@@ -1,7 +1,9 @@
 package com.ninjaone.backendinterviewproject.infraestructure.jpa.device;
 
+import com.ninjaone.backendinterviewproject.domain.BusinessException;
 import com.ninjaone.backendinterviewproject.domain.device.Device;
 import com.ninjaone.backendinterviewproject.domain.device.DeviceRepository;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +24,11 @@ public class DeviceRepositoryJPA implements DeviceRepository {
 
     @Override
     public void remove(UUID id) {
-        repo.deleteById(id);
+        try {
+            repo.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new BusinessException("No device with id: " + id.toString() + " exist!", e);
+        }
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.ninjaone.backendinterviewproject.domain.rmmservice;
 
+import com.ninjaone.backendinterviewproject.domain.BusinessException;
 import com.ninjaone.backendinterviewproject.domain.TypeDevice;
 import com.ninjaone.backendinterviewproject.infraestructure.jpa.rmmservice.RmmServiceEntity;
 
@@ -16,6 +17,7 @@ public class RMMService {
     private Map<TypeDevice, BigDecimal> prices;
 
     public RMMService(UUID id, String name, Map<TypeDevice, BigDecimal> prices) {
+        validateName(name);
         this.id = id;
         this.name = name;
         this.prices = new HashMap<>();
@@ -40,6 +42,12 @@ public class RMMService {
     private Optional<BigDecimal> findPrice(TypeDevice typeDevice) {
         if (commonPrice != null) return Optional.of(commonPrice);
         return Optional.ofNullable(prices.get(typeDevice));
+    }
+
+    private void validateName(String name) {
+        if (name.isBlank()) {
+            throw new BusinessException("Service needs a name!");
+        }
     }
 
     @Override
