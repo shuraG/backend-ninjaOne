@@ -1,7 +1,7 @@
 package com.ninjaone.backendinterviewproject.web.controller;
 
 import com.ninjaone.backendinterviewproject.application.DeviceApplication;
-import com.ninjaone.backendinterviewproject.domain.TypeDevice;
+import com.ninjaone.backendinterviewproject.domain.device.TypeDevice;
 import com.ninjaone.backendinterviewproject.web.request.CreateDevice;
 import com.ninjaone.backendinterviewproject.web.request.CreateSubscription;
 import org.springframework.http.HttpStatus;

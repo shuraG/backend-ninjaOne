@@ -1,6 +1,6 @@
 package com.ninjaone.backendinterviewproject.infraestructure.jpa.device;
 
-import com.ninjaone.backendinterviewproject.domain.TypeDevice;
+import com.ninjaone.backendinterviewproject.domain.device.TypeDevice;
 import com.ninjaone.backendinterviewproject.domain.device.Device;
 import com.ninjaone.backendinterviewproject.domain.rmmservice.RMMService;
 import com.ninjaone.backendinterviewproject.infraestructure.jpa.rmmservice.RmmServiceEntity;

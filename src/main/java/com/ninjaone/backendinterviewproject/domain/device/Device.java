@@ -1,7 +1,6 @@
 package com.ninjaone.backendinterviewproject.domain.device;
 
 import com.ninjaone.backendinterviewproject.domain.BusinessException;
-import com.ninjaone.backendinterviewproject.domain.TypeDevice;
 import com.ninjaone.backendinterviewproject.infraestructure.jpa.device.DeviceEntity;
 import com.ninjaone.backendinterviewproject.domain.rmmservice.RMMService;
 

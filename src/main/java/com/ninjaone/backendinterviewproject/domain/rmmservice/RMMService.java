@@ -1,7 +1,7 @@
 package com.ninjaone.backendinterviewproject.domain.rmmservice;
 
 import com.ninjaone.backendinterviewproject.domain.BusinessException;
-import com.ninjaone.backendinterviewproject.domain.TypeDevice;
+import com.ninjaone.backendinterviewproject.domain.device.TypeDevice;
 import com.ninjaone.backendinterviewproject.infraestructure.jpa.rmmservice.RmmServiceEntity;
 
 import java.math.BigDecimal;

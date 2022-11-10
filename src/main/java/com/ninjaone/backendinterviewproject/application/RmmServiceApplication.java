@@ -1,6 +1,7 @@
 package com.ninjaone.backendinterviewproject.application;
 
-import com.ninjaone.backendinterviewproject.domain.TypeDevice;
+import com.ninjaone.backendinterviewproject.domain.DuplicateException;
+import com.ninjaone.backendinterviewproject.domain.device.TypeDevice;
 import com.ninjaone.backendinterviewproject.domain.rmmservice.RMMService;
 import com.ninjaone.backendinterviewproject.domain.rmmservice.RMMServiceRepository;
 
@@ -37,7 +38,7 @@ public class RmmServiceApplication {
 
     private void validateRmmServiceDuplicated(String name) {
         if (rmmServiceRepository.getByName(name).isPresent()) {
-            throw new DuplicateException();
+            throw new DuplicateException("RmmService", "name", name);
         }
     }
 }

@@ -1,13 +1,16 @@
 package com.ninjaone.backendinterviewproject.application;
 
 import com.ninjaone.backendinterviewproject.domain.CacheService;
-import com.ninjaone.backendinterviewproject.domain.TypeDevice;
+import com.ninjaone.backendinterviewproject.domain.DuplicateException;
+import com.ninjaone.backendinterviewproject.domain.device.TypeDevice;
 import com.ninjaone.backendinterviewproject.domain.device.Device;
+import com.ninjaone.backendinterviewproject.domain.device.DeviceNotFoundException;
 import com.ninjaone.backendinterviewproject.domain.device.DeviceRepository;
 import com.ninjaone.backendinterviewproject.domain.extracost.ExtraCost;
 import com.ninjaone.backendinterviewproject.domain.extracost.ExtraCostRepository;
 import com.ninjaone.backendinterviewproject.domain.extracost.TypeExtraCost;
 import com.ninjaone.backendinterviewproject.domain.rmmservice.RMMServiceRepository;
+import com.ninjaone.backendinterviewproject.domain.rmmservice.RmmServiceNotFoundException;
 
 import java.math.BigDecimal;
 import java.util.Set;
@@ -44,16 +47,16 @@ public class DeviceApplication {
     }
 
     public void addSubscription(UUID deviceId, UUID serviceId) {
-        var device = deviceRepository.get(deviceId).orElseThrow(NotFoundException::new);
-        var service = rmmServiceRepository.get(serviceId).orElseThrow(NotFoundException::new);
+        var device = deviceRepository.get(deviceId).orElseThrow(() -> new DeviceNotFoundException(deviceId));
+        var service = rmmServiceRepository.get(serviceId).orElseThrow(() -> new RmmServiceNotFoundException(serviceId));
         device.addSubscription(service);
         deviceRepository.save(device);
         upCache(deviceId, service.getPrice(device.getType()), BigDecimal::add);
     }
 
     public void removeSubscription(UUID deviceId, UUID serviceId) {
-        var device = deviceRepository.get(deviceId).orElseThrow(NotFoundException::new);
-        var service = rmmServiceRepository.get(serviceId).orElseThrow(NotFoundException::new);
+        var device = deviceRepository.get(deviceId).orElseThrow(() -> new DeviceNotFoundException(deviceId));
+        var service = rmmServiceRepository.get(serviceId).orElseThrow(() -> new RmmServiceNotFoundException(serviceId));
         device.unsubscribe(service);
         deviceRepository.save(device);
         upCache(deviceId, service.getPrice(device.getType()), BigDecimal::subtract);
@@ -68,13 +71,13 @@ public class DeviceApplication {
                         .orElseGet(() -> deviceRepository.get(deviceId)
                                 .map(device -> device.costSubscriptions().add(extraCost))
                                 .map(cost -> cache.save(deviceId.toString(), cost, BigDecimal::toString))
-                                .orElseThrow(NotFoundException::new))
+                                .orElseThrow(() -> new DeviceNotFoundException(deviceId)))
         ).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     private void validateDeviceDuplicated(String systemName) {
         if (deviceRepository.get(systemName).isPresent()) {
-            throw new DuplicateException();
+            throw new DuplicateException("Device", "SystemName", systemName);
         }
     }
 

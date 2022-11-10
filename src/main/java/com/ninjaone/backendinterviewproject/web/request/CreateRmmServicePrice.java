@@ -1,6 +1,6 @@
 package com.ninjaone.backendinterviewproject.web.request;
 
-import com.ninjaone.backendinterviewproject.domain.TypeDevice;
+import com.ninjaone.backendinterviewproject.domain.device.TypeDevice;
 
 import java.math.BigDecimal;
 import java.util.HashMap;

@@ -1,6 +1,5 @@
 package com.ninjaone.backendinterviewproject.domain.device;
 
-import com.ninjaone.backendinterviewproject.domain.TypeDevice;
 import com.ninjaone.backendinterviewproject.domain.rmmservice.RMMService;
 import org.junit.jupiter.api.Test;
 

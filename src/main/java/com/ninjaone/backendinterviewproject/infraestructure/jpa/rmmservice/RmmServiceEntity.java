@@ -1,6 +1,6 @@
 package com.ninjaone.backendinterviewproject.infraestructure.jpa.rmmservice;
 
-import com.ninjaone.backendinterviewproject.domain.TypeDevice;
+import com.ninjaone.backendinterviewproject.domain.device.TypeDevice;
 import com.ninjaone.backendinterviewproject.domain.rmmservice.RMMService;
 
 import javax.persistence.Entity;
