@@ -1,7 +1,8 @@
 package com.ninjaone.backendinterviewproject.web.controller;
 
 import com.ninjaone.backendinterviewproject.application.RmmServiceApplication;
-import com.ninjaone.backendinterviewproject.web.request.CreateRmmServicePrice;
+import com.ninjaone.backendinterviewproject.web.request.CreateRmmServicePriceReq;
+import com.ninjaone.backendinterviewproject.web.response.RmmServiceCreatedResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,11 +25,11 @@ public class RmmServiceController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UUID post(@RequestBody CreateRmmServicePrice request) {
+    public RmmServiceCreatedResponse post(@RequestBody CreateRmmServicePriceReq request) {
         if (request.prices.isEmpty()) {
-            return rmmServiceApplication.createRmmService(request.name, request.price);
+            return new RmmServiceCreatedResponse(rmmServiceApplication.createRmmService(request.name, request.price));
         }
-        return rmmServiceApplication.createRmmService(request.name, request.prices);
+        return new RmmServiceCreatedResponse(rmmServiceApplication.createRmmService(request.name, request.prices));
     }
 
     @DeleteMapping("/{id_rmmservice}")

@@ -5,7 +5,6 @@ import com.ninjaone.backendinterviewproject.domain.device.Device;
 import com.ninjaone.backendinterviewproject.domain.device.DeviceRepository;
 import org.springframework.dao.EmptyResultDataAccessException;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;

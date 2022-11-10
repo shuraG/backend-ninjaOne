@@ -1,7 +1,7 @@
 package com.ninjaone.backendinterviewproject.web.controller;
 
-import com.ninjaone.backendinterviewproject.domain.NotFoundException;
 import com.ninjaone.backendinterviewproject.domain.BusinessException;
+import com.ninjaone.backendinterviewproject.domain.NotFoundException;
 import com.ninjaone.backendinterviewproject.web.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

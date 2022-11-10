@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CreateRmmServicePrice {
+public class CreateRmmServicePriceReq {
     public String name;
     public BigDecimal price;
     public TypeDevice type;
