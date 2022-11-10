@@ -78,11 +78,10 @@ public class DeviceIntegrationTest {
         var postRequest = post("/device")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(requestDevice));
-        var expectedResponse = crudRepository.findBySystemName("Petronia CBA").get().getId().toString();
 
         mockMvc.perform(postRequest)
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.deviceId").value(expectedResponse))
+                .andExpect(jsonPath("$.deviceId").value(crudRepository.findBySystemName("Petronia CBA").get().getId().toString()))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 

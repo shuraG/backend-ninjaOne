@@ -53,4 +53,7 @@ public class RmmServiceEntity {
         return new RMMService(id, name, typeDeviceWithPrice);
     }
 
+    public UUID getId() {
+        return id;
+    }
 }

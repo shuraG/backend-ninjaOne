@@ -26,10 +26,10 @@ public class RmmServiceController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public RmmServiceCreatedResponse post(@RequestBody CreateRmmServicePriceReq request) {
-        if (request.prices.isEmpty()) {
-            return new RmmServiceCreatedResponse(rmmServiceApplication.createRmmService(request.name, request.price));
+        if (request.getPrices().isEmpty()) {
+            return new RmmServiceCreatedResponse(rmmServiceApplication.createRmmService(request.getName(), request.getPrice()));
         }
-        return new RmmServiceCreatedResponse(rmmServiceApplication.createRmmService(request.name, request.prices));
+        return new RmmServiceCreatedResponse(rmmServiceApplication.createRmmService(request.getName(), request.getPrices()));
     }
 
     @DeleteMapping("/{id_rmmservice}")
