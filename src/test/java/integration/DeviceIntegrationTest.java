@@ -32,7 +32,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
 
-
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {BackendInterviewProjectApplication.class})
 @AutoConfigureMockMvc
@@ -74,7 +73,7 @@ public class DeviceIntegrationTest {
 
     @Test
     public void givenDeviceWhenCreateDeviceThenGetDeviceId() throws Exception {
-        var requestDevice = new CreateDeviceReq("Petronia CBA", "MAC");
+        var requestDevice = new CreateDeviceReq("Petronia CBA", TypeDevice.MAC);
         var postRequest = post("/device")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(requestDevice));
@@ -87,7 +86,7 @@ public class DeviceIntegrationTest {
 
     @Test
     public void givenDeviceDuplicatedSystemNameWhenCreateDeviceThenGetErrorDuplicated() throws Exception {
-        var requestDevice = new CreateDeviceReq(DEVICE_SYSTEM_NAME, TYPE_DEVICE.toString());
+        var requestDevice = new CreateDeviceReq("LAPTOP_12345", TypeDevice.WINDOWS);
         var postRequest = post("/device")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(requestDevice));

@@ -32,8 +32,7 @@ public class DeviceController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public DeviceCreatedResponse postDevice(@RequestBody CreateDeviceReq request) {
-        var typeDevice = toTypeDevice(request.getTypeDevice());
-        var deviceId = deviceApplication.createDevice(request.getSystemName(), typeDevice);
+        var deviceId = deviceApplication.createDevice(request.getSystemName(), request.getTypeDevice());
         return new DeviceCreatedResponse(deviceId);
     }
 
@@ -69,7 +68,4 @@ public class DeviceController {
         deviceApplication.removeDevice(deviceId);
     }
 
-    private TypeDevice toTypeDevice(String typeDevice) {
-        return TypeDevice.valueOf(typeDevice.toUpperCase());
-    }
 }

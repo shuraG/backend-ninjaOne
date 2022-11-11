@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.Locale;
 
 public class RMMService {
     private UUID id;
@@ -19,7 +20,7 @@ public class RMMService {
     public RMMService(UUID id, String name, Map<TypeDevice, BigDecimal> prices) {
         validateName(name);
         this.id = id;
-        this.name = name;
+        this.name = name.toLowerCase(Locale.ROOT);
         this.prices = new HashMap<>();
         this.prices.putAll(prices);
     }

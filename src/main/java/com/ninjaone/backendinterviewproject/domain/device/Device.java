@@ -7,6 +7,7 @@ import com.ninjaone.backendinterviewproject.infraestructure.jpa.device.DeviceEnt
 import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 public class Device {
@@ -18,7 +19,7 @@ public class Device {
     public Device(UUID id, String systemName, TypeDevice type) {
         validateSystemName(systemName);
         this.id = id;
-        this.systemName = systemName;
+        this.systemName = systemName.toUpperCase(Locale.ROOT);
         this.type = type;
         this.subscriptions = new LinkedList<>();
     }

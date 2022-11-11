@@ -6,6 +6,7 @@ import com.ninjaone.backendinterviewproject.domain.rmmservice.RMMService;
 import com.ninjaone.backendinterviewproject.domain.rmmservice.RMMServiceRepository;
 
 import java.math.BigDecimal;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
@@ -37,8 +38,9 @@ public class RmmServiceApplication {
     }
 
     private void validateRmmServiceDuplicated(String name) {
-        if (rmmServiceRepository.getByName(name).isPresent()) {
-            throw new DuplicateException("RmmService", "name", name);
+        var nameValidated = name.toLowerCase(Locale.ROOT);
+        if (rmmServiceRepository.getByName(nameValidated).isPresent()) {
+            throw new DuplicateException("RmmService", "name", nameValidated);
         }
     }
 }

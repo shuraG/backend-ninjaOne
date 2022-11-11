@@ -13,6 +13,7 @@ import com.ninjaone.backendinterviewproject.domain.rmmservice.RMMServiceReposito
 import com.ninjaone.backendinterviewproject.domain.rmmservice.RmmServiceNotFoundException;
 
 import java.math.BigDecimal;
+import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
 import java.util.function.BiFunction;
@@ -76,8 +77,9 @@ public class DeviceApplication {
     }
 
     private void validateDeviceDuplicated(String systemName) {
-        if (deviceRepository.get(systemName).isPresent()) {
-            throw new DuplicateException("Device", "SystemName", systemName);
+        var nameValidated = systemName.toUpperCase(Locale.ROOT);
+        if (deviceRepository.get(nameValidated).isPresent()) {
+            throw new DuplicateException("Device", "SystemName", nameValidated);
         }
     }
 

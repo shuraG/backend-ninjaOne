@@ -1,10 +1,12 @@
 package com.ninjaone.backendinterviewproject.web.request;
 
+import com.ninjaone.backendinterviewproject.domain.device.TypeDevice;
+
 public class CreateDeviceReq {
     private String systemName;
-    private String typeDevice;
+    private TypeDevice typeDevice;
 
-    public CreateDeviceReq(String systemName, String typeDevice) {
+    public CreateDeviceReq(String systemName, TypeDevice typeDevice) {
         this.systemName = systemName;
         this.typeDevice = typeDevice;
     }
@@ -13,7 +15,7 @@ public class CreateDeviceReq {
         return systemName;
     }
 
-    public String getTypeDevice() {
+    public TypeDevice getTypeDevice() {
         return typeDevice;
     }
 }
