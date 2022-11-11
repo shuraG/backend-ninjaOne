@@ -12,7 +12,7 @@ like `jdbc:h2:file:/{your file path here}`
 
 * Due to time the device types have been reduced to an ENUM. For greater flexibility, it should be implemented as its
   own entity, rather than a business object.
-* Due to time, the documentation of endpoints use basic documentation MARKDOWN, we should use a better tool as `Swagger` to automate the most part of this documentation software process.
+* Due to time, the documentation of endpoints use basic documentation MARKDOWN, we should use a better tool as `Swagger` to automate the most part of documentation software process.
 * At the moment the `RmmService` class handles both a general price and a price for a specific device type. To improve,
   you could think of an interface that implements the `getPrice(Type Device)` method and have two classes that
   implement: `CommonPrice`(A single price) and `SpecificPrice`(with a map of prices by type). So we delegate this
@@ -201,7 +201,3 @@ password: password
 ```
 
 You should be able to see a db console now that has the Sample Repository in it.
-
-### Suggestions
-
-Feel free to remove or repurpose the existing Sample Repository, Entity, Controller, and Service. 
