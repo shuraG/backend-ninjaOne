@@ -1,5 +1,6 @@
 package com.ninjaone.backendinterviewproject.domain.rmmservice;
 
+import com.ninjaone.backendinterviewproject.domain.BusinessException;
 import com.ninjaone.backendinterviewproject.domain.device.TypeDevice;
 import org.junit.jupiter.api.Test;
 
@@ -62,5 +63,11 @@ class RMMServiceTest {
         var rmmService = new RMMService(UUID.randomUUID(), "antivirus", priceWindows);
 
         assertThrows(PriceNotAvailableForDevice.class, () -> rmmService.getPrice(TypeDevice.MAC));
+    }
+
+    @Test
+    void givenAnNegativePriceWhenCreateServiceThenGetException() {
+        var negativePrice = new BigDecimal(-10.10);
+        assertThrows(BusinessException.class, () -> new RMMService(UUID.randomUUID(), "antivirus", negativePrice));
     }
 }
