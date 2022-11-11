@@ -80,7 +80,7 @@ public class DeviceIntegrationTest {
 
         mockMvc.perform(postRequest)
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.deviceId").value(crudRepository.findBySystemName("Petronia CBA").get().getId().toString()))
+                .andExpect(jsonPath("$.deviceId").value(crudRepository.findBySystemName("PETRONIA CBA").get().getId().toString()))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 

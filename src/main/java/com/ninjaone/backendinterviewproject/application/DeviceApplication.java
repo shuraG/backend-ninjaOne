@@ -70,7 +70,10 @@ public class DeviceApplication {
         return devicesId.stream().map(deviceId ->
                 cache.get(deviceId.toString(), BigDecimal::new).orElseGet(() -> deviceRepository.get(deviceId)
                         .map(device -> device.hasSubscriptions() ? device.costSubscriptions().add(extraCost) : BigDecimal.ZERO)
-                        .map(cost -> cache.save(deviceId.toString(), cost, BigDecimal::toString))
+                        .map(cost -> {
+                            cache.save(deviceId.toString(), cost, BigDecimal::toString);
+                            return cost;
+                        })
                         .orElseThrow(() -> new DeviceNotFoundException(deviceId)))
         ).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
