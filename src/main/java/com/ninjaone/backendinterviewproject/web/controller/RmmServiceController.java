@@ -34,7 +34,7 @@ public class RmmServiceController {
 
     @DeleteMapping("/{id_rmmservice}")
     @ResponseStatus(HttpStatus.OK)
-    public void postDevice(@PathVariable(name = "id_rmmservice") UUID rmmServiceId) {
+    public void deleteDevice(@PathVariable(name = "id_rmmservice") UUID rmmServiceId) {
         rmmServiceApplication.removeRmmService(rmmServiceId);
     }
 }
