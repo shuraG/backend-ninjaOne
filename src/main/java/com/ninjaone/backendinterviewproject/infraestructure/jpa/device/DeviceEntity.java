@@ -44,7 +44,7 @@ public class DeviceEntity {
 
     public Device getDevice() {
         var device = new Device(id, systemName, TypeDevice.valueOf(type));
-        subscriptions.stream().map(s -> s.getRmmService()).forEach(s -> device.addSubscription(s));
+        subscriptions.stream().map(s -> s.getRmmService()).forEach(s -> device.subscribe(s));
         return device;
     }
 

@@ -42,7 +42,7 @@ public class DeviceIntegrationTest {
     public static final TypeDevice TYPE_DEVICE = TypeDevice.WINDOWS;
 
     @Autowired
-    DeviceCrudRepository crudRepository;
+    private DeviceCrudRepository crudRepository;
 
     @Autowired
     private WebApplicationContext webApplicationContext;

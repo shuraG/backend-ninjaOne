@@ -46,7 +46,7 @@ public class DeviceController {
     }
 
     @GetMapping("/cost")
-    public TotalCostResponse postSubscription(
+    public TotalCostResponse getTotalCost(
             @RequestBody Set<UUID> request
     ) {
         var totalCost = deviceApplication.calculateTotal(request);

@@ -50,7 +50,7 @@ public class DeviceApplication {
     public void addSubscription(UUID deviceId, UUID serviceId) {
         var device = deviceRepository.get(deviceId).orElseThrow(() -> new DeviceNotFoundException(deviceId));
         var service = rmmServiceRepository.get(serviceId).orElseThrow(() -> new RmmServiceNotFoundException(serviceId));
-        device.addSubscription(service);
+        device.subscribe(service);
         deviceRepository.save(device);
         upCache(deviceId, service.getPrice(device.getType()), BigDecimal::add);
     }
@@ -68,11 +68,10 @@ public class DeviceApplication {
                 .map(ExtraCost::getCost).get();
 
         return devicesId.stream().map(deviceId ->
-                cache.get(deviceId.toString(), BigDecimal::new)
-                        .orElseGet(() -> deviceRepository.get(deviceId)
-                                .map(device -> device.costSubscriptions().add(extraCost))
-                                .map(cost -> cache.save(deviceId.toString(), cost, BigDecimal::toString))
-                                .orElseThrow(() -> new DeviceNotFoundException(deviceId)))
+                cache.get(deviceId.toString(), BigDecimal::new).orElseGet(() -> deviceRepository.get(deviceId)
+                        .map(device -> device.hasSubscriptions() ? device.costSubscriptions().add(extraCost) : BigDecimal.ZERO)
+                        .map(cost -> cache.save(deviceId.toString(), cost, BigDecimal::toString))
+                        .orElseThrow(() -> new DeviceNotFoundException(deviceId)))
         ).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 

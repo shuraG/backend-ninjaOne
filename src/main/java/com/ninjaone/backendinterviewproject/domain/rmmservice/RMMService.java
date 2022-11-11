@@ -19,6 +19,7 @@ public class RMMService {
 
     public RMMService(UUID id, String name, Map<TypeDevice, BigDecimal> prices) {
         validateName(name);
+        validatePrice(prices);
         this.id = id;
         this.name = name.toLowerCase(Locale.ROOT);
         this.prices = new HashMap<>();
@@ -26,8 +27,11 @@ public class RMMService {
     }
 
     public RMMService(UUID id, String name, BigDecimal price) {
+        validateName(name);
+        validatePrice(price);
         this.id = id;
-        this.name = name;
+        this.name = name.toLowerCase(Locale.ROOT);
+        ;
         this.commonPrice = price;
     }
 
@@ -48,6 +52,18 @@ public class RMMService {
     private void validateName(String name) {
         if (name.isBlank()) {
             throw new BusinessException("Service needs a name!");
+        }
+    }
+
+    private void validatePrice(BigDecimal price) {
+        if (price.signum() < 0) {
+            throw new BusinessException("Price needs a value greater or equal zero!");
+        }
+    }
+
+    private void validatePrice(Map<TypeDevice, BigDecimal> prices) {
+        if (prices.values().stream().anyMatch(price -> price.signum() < 0)) {
+            throw new BusinessException("Price needs a value greater or equal zero!");
         }
     }
 

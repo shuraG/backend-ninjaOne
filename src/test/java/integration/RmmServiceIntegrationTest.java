@@ -39,7 +39,7 @@ public class RmmServiceIntegrationTest {
     public static final BigDecimal RMM_SERVICE_PRICE = new BigDecimal(10.89);
 
     @Autowired
-    RmmServiceCrudRepository crudRepository;
+    private RmmServiceCrudRepository crudRepository;
 
     @Autowired
     private ObjectMapper objectMapper;

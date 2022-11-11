@@ -25,8 +25,8 @@ class DeviceTest {
 
         var backupService = new RMMService(UUID.randomUUID(), "backup", new BigDecimal(3.0));
         var screenShareService = new RMMService(UUID.randomUUID(), "screen_share", BigDecimal.ONE);
-        device.addSubscription(backupService);
-        device.addSubscription(screenShareService);
+        device.subscribe(backupService);
+        device.subscribe(screenShareService);
 
         assertEquals(new BigDecimal(4.0), device.costSubscriptions());
     }
@@ -39,7 +39,7 @@ class DeviceTest {
         priceForWindows.put(TypeDevice.WINDOWS, new BigDecimal(5.0));
         var antivirusForWindowsService = new RMMService(UUID.randomUUID(), "Antivirus", priceForWindows);
 
-        assertThrows(NotAvailableRMMServiceForDevice.class, () -> deviceMac.addSubscription(antivirusForWindowsService));
+        assertThrows(NotAvailableRMMServiceForDevice.class, () -> deviceMac.subscribe(antivirusForWindowsService));
     }
 
     @Test
@@ -50,7 +50,7 @@ class DeviceTest {
         priceForMac.put(TypeDevice.MAC, new BigDecimal(7.4));
         var antivirusForMacService = new RMMService(UUID.randomUUID(), "Antivirus", priceForMac);
 
-        deviceMac.addSubscription(antivirusForMacService);
+        deviceMac.subscribe(antivirusForMacService);
 
         assertEquals(new BigDecimal(7.4), deviceMac.costSubscriptions());
     }
@@ -63,8 +63,8 @@ class DeviceTest {
         priceForMac.put(TypeDevice.MAC, new BigDecimal(7.0));
         var antivirusForMacService = new RMMService(UUID.fromString("0000-00-00-00-000000"), "Antivirus", priceForMac);
         var antivirusForMacServiceDuplicated = new RMMService(UUID.fromString("0000-00-00-00-000000"), "Antivirus", priceForMac);
-        deviceMac.addSubscription(antivirusForMacService);
+        deviceMac.subscribe(antivirusForMacService);
 
-        assertThrows(RuntimeException.class, () -> deviceMac.addSubscription(antivirusForMacServiceDuplicated));
+        assertThrows(RuntimeException.class, () -> deviceMac.subscribe(antivirusForMacServiceDuplicated));
     }
 }

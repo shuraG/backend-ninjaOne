@@ -7,11 +7,14 @@ public class TotalCostResponse {
     private BigDecimal totalCost;
 
     public TotalCostResponse(BigDecimal totalCost) {
-        this.totalCost = totalCost;
-        scaleTwoDecimals();
+        this.totalCost = scaleTwoDecimals(totalCost);
     }
 
-    private void scaleTwoDecimals() {
-        this.totalCost.setScale(2, RoundingMode.HALF_UP);
+    private BigDecimal scaleTwoDecimals(BigDecimal totalCost) {
+        return totalCost.setScale(2, RoundingMode.HALF_UP);
+    }
+
+    public BigDecimal getTotalCost() {
+        return totalCost;
     }
 }

@@ -24,7 +24,7 @@ public class Device {
         this.subscriptions = new LinkedList<>();
     }
 
-    public void addSubscription(RMMService service) {
+    public void subscribe(RMMService service) {
         if (!service.isAvailableForTypeDevice(type)) {
             throw new NotAvailableRMMServiceForDevice();
         }
@@ -45,6 +45,10 @@ public class Device {
         return subscriptions.stream()
                 .map(s -> s.getPrice(type))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    public boolean hasSubscriptions() {
+        return !subscriptions.isEmpty();
     }
 
     private boolean hasRMMService(RMMService service) {
