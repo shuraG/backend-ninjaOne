@@ -26,7 +26,7 @@ public class Device {
 
     public void subscribe(RMMService service) {
         if (!service.isAvailableForTypeDevice(type)) {
-            throw new NotAvailableRMMServiceForDevice();
+            throw new NotAvailableRMMServiceForDevice(type);
         }
         if (hasRMMService(service)) {
             throw new BusinessException("Service already added!");
