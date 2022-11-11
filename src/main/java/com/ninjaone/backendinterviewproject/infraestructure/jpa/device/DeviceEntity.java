@@ -11,6 +11,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
+import javax.persistence.Column;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -20,9 +21,9 @@ import java.util.stream.Collectors;
 public class DeviceEntity {
     @Id
     private UUID id;
+    @Column(unique = true)
     private String systemName;
     private String type;
-
     @ManyToMany
     @JoinTable(
             name = "subscription",

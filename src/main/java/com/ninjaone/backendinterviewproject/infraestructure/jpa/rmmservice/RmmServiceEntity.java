@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
@@ -19,8 +20,8 @@ import java.util.stream.Collectors;
 public class RmmServiceEntity {
     @Id
     private UUID id;
+    @Column(unique = true)
     private String name;
-
     @OneToMany(mappedBy = "rmmServiceId", cascade = CascadeType.ALL)
     private List<RmmServicePriceEntity> prices;
 
