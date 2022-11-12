@@ -14,9 +14,12 @@ import com.ninjaone.backendinterviewproject.domain.rmmservice.RmmServiceNotFound
 
 import java.math.BigDecimal;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class DeviceApplication {
 
@@ -67,15 +70,14 @@ public class DeviceApplication {
         var extraCost = extraCostRepository.findByType(TypeExtraCost.BASE_COST_OBLIGATORY)
                 .map(ExtraCost::getCost).get();
 
-        return devicesId.stream().map(deviceId ->
-                cache.get(deviceId.toString(), BigDecimal::new).orElseGet(() -> deviceRepository.get(deviceId)
-                        .map(device -> device.hasSubscriptions() ? device.costSubscriptions().add(extraCost) : BigDecimal.ZERO)
-                        .map(cost -> {
-                            cache.save(deviceId.toString(), cost, BigDecimal::toString);
-                            return cost;
-                        })
-                        .orElseThrow(() -> new DeviceNotFoundException(deviceId)))
-        ).reduce(BigDecimal.ZERO, BigDecimal::add);
+        Function<UUID, BigDecimal> calculateTotalCostDevice = (UUID deviceId) -> deviceRepository
+                .get(deviceId)
+                .map(device -> device.hasSubscriptions() ? device.costSubscriptions().add(extraCost) : BigDecimal.ZERO)
+                .orElseThrow(() -> new DeviceNotFoundException(deviceId));
+
+        return devicesId.stream()
+                .map(deviceId -> getCostCached(deviceId, calculateTotalCostDevice))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     private void validateDeviceDuplicated(String systemName) {
@@ -83,6 +85,15 @@ public class DeviceApplication {
         if (deviceRepository.get(nameValidated).isPresent()) {
             throw new DuplicateException("Device", "SystemName", nameValidated);
         }
+    }
+
+    private BigDecimal getCostCached(UUID id, Function<UUID, BigDecimal> getCostIfNotCached) {
+        return cache.get(id.toString(), BigDecimal::new)
+                .orElseGet(() -> {
+                    var cost = getCostIfNotCached.apply(id);
+                    cache.save(id.toString(), cost, BigDecimal::toString);
+                    return cost;
+                });
     }
 
     private void upCache(UUID id, BigDecimal price, BiFunction<BigDecimal, BigDecimal, BigDecimal> op) {
