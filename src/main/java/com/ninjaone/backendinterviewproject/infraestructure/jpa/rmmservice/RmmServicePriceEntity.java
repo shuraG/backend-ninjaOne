@@ -24,7 +24,6 @@ public class RmmServicePriceEntity implements Serializable {
     }
 
     public RmmServicePriceEntity(UUID rmmServiceId, String typeDevice, BigDecimal price) {
-        System.out.println("typeDevice" + typeDevice);
         this.rmmServiceId = rmmServiceId;
         this.typeDevice = typeDevice;
         this.price = price;
